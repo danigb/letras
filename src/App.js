@@ -1,45 +1,45 @@
 import React, { Component } from "react";
-import KeyboardHandler from "./KeyboardHandler"
+import KeyboardHandler from "./KeyboardHandler";
 import "./App.css";
 
-const reduce = (state, action = {}) => {
-  const { type } = action
-  switch (type) {
-    case 'ADD_LETTER': 
-      state.current.push(action.letter)
-      return state
-    case "DELETE_LETTER":
-      state.current.pop()
-      return state
-    default:
-      return state
-  }
-}
+const getLetterClass = (target, current) => 
+  target === current ? 'MATCH' :
+  current === undefined ? 'PENDING' :
+  'NONE'
 
-const initialState = {
-  target: "HOLA",
-  current: []
-}
 
 class App extends Component {
-  state = reduce(initialState)
-
-  dispatch (action) {
-    this.setState(prevState => reduce(prevState, action))
+  constructor (props) {
+    super(props)
+    this.state = this.props.reduce(this.props.initialState);
   }
-  addLetter = (letter) => this.dispatch({ type: "ADD_LETTER", letter })
-  deleteLetter = () => this.dispatch({ type: "DELETE_LETTER" })
+
+  dispatch(action) {
+    this.setState(prevState => this.props.reduce(prevState, action));
+  }
+  addLetter = letter => this.dispatch({ type: "ADD_LETTER", letter });
+  deleteLetter = () => this.dispatch({ type: "DELETE_LETTER" });
+  newWord = () => this.dispatch({ type: "INIT" })
 
   render() {
     return (
       <div className="App">
-        <KeyboardHandler onAddLetter={this.addLetter} onDeleteLetter={this.deleteLetter} />
+        <KeyboardHandler
+          onAddLetter={this.addLetter}
+          onDeleteLetter={this.deleteLetter}
+        />
+        <div className="App-header">
+          <a href="#!" onClick={this.newWord}>palabras</a>
+        </div>
         <div className="App-playground">
           <div className="target">
-            {this.state.target}
+            {this.state.target.map((letter, i) => {
+              const cls = getLetterClass(letter, this.state.current[i])
+              return (<span key={i} className={cls}>{letter}</span>)
+            })}
           </div>
           <div className="current">
-            {this.state.current.join('')}
+            {this.state.current.join("")}
           </div>
         </div>
       </div>

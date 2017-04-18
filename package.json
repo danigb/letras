@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gh-pages": "^0.12.0",
+    "pick-random": "^2.0.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
+  "homepage": "https://danigb.github.io/letras",
   "devDependencies": {
     "cz-conventional-changelog": "^2.0.0",
     "prettier": "^1.1.0",
@@ -16,7 +19,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "format": "prettier src/*.js --write"
+    "format": "prettier src/*.js --write",
+    "precommit": "npm run format",
+    "commit": "git-cz",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "config": {
     "commitizen": {

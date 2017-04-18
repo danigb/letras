@@ -3,15 +3,23 @@
 }
 
 .App-header {
-  text-align: left;
-  font-size: 16px;
-  background-color: #222;
-  padding: 1px;
+  font-size: 24px;
   color: white;
 }
 
 .App-playground {
   font-size: 96px;
-  line-height: 2em;
+  line-height: 1.2em;
+}
+.App-playground .target {
+  padding: 0.5em 0;
+}
+
+.target .NONE { color: #C00; }
+.target .PENDING { color: black; }
+.target .MATCH { color: #0A0; }
+
+.App-playground .current {
+  word-wrap: break-word;
 }
 
