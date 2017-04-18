@@ -3,10 +3,7 @@ const readline = require("readline")
 
 const grouped = {}
 
-var lineReader = readline.createInterface({
-  input: fs.createReadStream('palabras.txt')
-});
-lineReader.on('close', () => {
+const writeSingleWordFiles = (grouped) => {
   const lens = Object.keys(grouped)
   lens.forEach(len => {
     const words = grouped[len].sort()
@@ -15,6 +12,23 @@ lineReader.on('close', () => {
     console.log(fileName, words.length)
     fs.writeFileSync(fileName, data)
   })
+}
+
+const writeFileWithAllWords = (grouped) => {
+  const lens = Object.keys(grouped)
+  lens.forEach(len => {
+    grouped[len] = grouped[len].sort().filter(w => /^[a-zñ]+$/.test(w))
+  })
+  const fileName = "words.json"
+  const data = JSON.stringify(grouped, null, 2)
+  fs.writeFileSync(fileName, data)
+}
+
+var lineReader = readline.createInterface({
+  input: fs.createReadStream('palabras.txt')
+});
+lineReader.on('close', () => {
+  writeFileWithAllWords(grouped)
 })
 
 lineReader.on('line', function (line) {

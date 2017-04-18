@@ -2,9 +2,24 @@
   text-align: center;
 }
 
-.App-header {
-  font-size: 24px;
+.App-reset {
+  font-size: 36px;
   color: white;
+  display: flex;
+  justify-content: center;
+}
+.App-reset .wordlength {
+  color: #333;
+  display: block;
+  background-color: #EFEFEF;
+  width: 1.8em;
+  padding: 0.2em 0 2em 0;
+  border-radius: 0.5em;
+  margin-right: 0.2em;
+  text-decoration: none;
+}
+.App-reset a.wordlength:hover {
+  background-color: #0F0;
 }
 
 .App-playground {
@@ -15,9 +30,9 @@
   padding: 0.5em 0;
 }
 
-.target .NONE { color: #C00; }
-.target .PENDING { color: black; }
-.target .MATCH { color: #0A0; }
+span.NONE { color: #C00; }
+span.PENDING { color: black; }
+span.MATCH { color: #0A0; }
 
 .App-playground .current {
   word-wrap: break-word;
