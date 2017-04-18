@@ -2,39 +2,45 @@
   text-align: center;
 }
 
-.App-reset {
-  font-size: 36px;
+.Selector {
+  font-size: 18px;
   color: white;
   display: flex;
   justify-content: center;
 }
-.App-reset .wordlength {
+.Selector a {
   color: #333;
   display: block;
-  background-color: #EFEFEF;
   width: 1.8em;
-  padding: 0.2em 0 2em 0;
-  border-radius: 0.5em;
+  padding: 1em 0 1em 0;
   margin-right: 0.2em;
+  border-bottom: 4px solid #333;
   text-decoration: none;
 }
-.App-reset a.wordlength:hover {
+.Selector a.active {
+  background-color: #CFC;
+}
+.Selector a:hover {
   background-color: #0F0;
 }
+a.reset {
+  font-size: 96px;
+  line-height: 1em;
+}
 
-.App-playground {
+.Letters {
   font-size: 96px;
   line-height: 1.2em;
 }
-.App-playground .target {
+.Letters.target {
   padding: 0.5em 0;
 }
-
-span.NONE { color: #C00; }
-span.PENDING { color: black; }
-span.MATCH { color: #0A0; }
-
-.App-playground .current {
+.Letters.current {
   word-wrap: break-word;
 }
+
+.Letters .NONE { color: #C00; }
+.Letters .PENDING { color: black; }
+.Letters .MATCH { color: #0A0; }
+
 

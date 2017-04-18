@@ -1,10 +1,31 @@
 import React, { Component } from "react";
 import KeyboardHandler from "./KeyboardHandler";
 import "./App.css";
-import isEqual from "lodash.isequal";
 
 const getLetterClass = (target, current) =>
   (target === current ? "MATCH" : current === undefined ? "PENDING" : "NONE");
+
+const Selector = ({ lengths, onSelect, current }) => {
+  const handleClick = len => e => {
+    e.preventDefault();
+    onSelect(len);
+  };
+  const all = lengths.map(len => {
+    const cn = +len === current ? "active" : "";
+    return <a key={len} className={cn} onClick={handleClick(len)}>{len}</a>;
+  });
+  return <div className="Selector">{all}</div>;
+};
+
+const Letters = ({ current, target, className }) => (
+  <div className={className + " Letters"}>
+    {current.map((letter, i) => (
+      <span key={i} className={getLetterClass(letter, target[i])}>
+        {letter}
+      </span>
+    ))}
+  </div>
+);
 
 class App extends Component {
   constructor(props) {
@@ -21,23 +42,6 @@ class App extends Component {
 
   render() {
     const { state } = this;
-    const canReset = isEqual(state.current, state.target);
-    const selector = canReset
-      ? state.availableLengths.map(len => (
-          <a
-            className="wordlength"
-            key={len}
-            href="#!"
-            onClick={() => this.newWord(len)}
-          >
-            {len}
-          </a>
-        ))
-      : "";
-    const target = state.target.map((letter, i) => {
-      const cls = getLetterClass(letter, this.state.current[i]);
-      return <span key={i} className={cls}>{letter}</span>;
-    });
 
     return (
       <div className="App">
@@ -45,23 +49,21 @@ class App extends Component {
           onAddLetter={this.addLetter}
           onDeleteLetter={this.deleteLetter}
         />
-        <div className="App-header">
-          <div>
-            <p>☲</p>
-          </div>
-        </div>
-        <div className="App-playground">
-          <div className="target">{target}</div>
-          <div className="current">
-            {this.state.current.map((letter, i) => {
-              const cls = getLetterClass(letter, this.state.target[i]);
-              return <span key={i} className={cls}>{letter}</span>;
-            })}
-          </div>
-        </div>
-        <div className="App-reset">
-          {selector}
-        </div>
+        <Selector
+          lengths={this.state.availableLengths}
+          onSelect={this.newWord}
+          current={this.state.target.length}
+        />
+        <Letters
+          className="target"
+          current={state.target}
+          target={state.current}
+        />
+        <Letters
+          className="current"
+          current={state.current}
+          target={state.target}
+        />
       </div>
     );
   }
